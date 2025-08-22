@@ -11,7 +11,7 @@ import random
 import ctypes
 
 pygame.mixer.init()
-pygame.mixer.music.load("satan_bassboost.mp3")
+pygame.mixer.music.load("yaderka.mp3")
 pygame.mixer.music.play(-1)
 
 random_sounds = []
