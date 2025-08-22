@@ -10,18 +10,27 @@ import os
 import random
 import ctypes
 
+if getattr(sys, 'frozen', False):
+    base_path = os.path.dirname(sys.executable)
+else:
+    base_path = os.path.dirname(__file__)
+
+yaderka_path = os.path.join(base_path, "yaderka.mp3")
+random_path = os.path.join(base_path, "random")
+
 pygame.mixer.init()
-pygame.mixer.music.load("yaderka.mp3")
+pygame.mixer.music.load(yaderka_path)
 pygame.mixer.music.play(-1)
 
 random_sounds = []
-for file in os.listdir("./random"):
-    if file.endswith((".mp3", ".wav", ".ogg")):
-        try:
-            snd = pygame.mixer.Sound(os.path.join("./random", file))
-            random_sounds.append(snd)
-        except:
-            pass
+if os.path.exists(random_path):
+    for file in os.listdir(random_path):
+        if file.endswith((".mp3", ".wav", ".ogg")):
+            try:
+                snd = pygame.mixer.Sound(os.path.join(random_path, file))
+                random_sounds.append(snd)
+            except:
+                pass
 
 root = tk.Tk()
 root.attributes("-fullscreen", True)
@@ -35,13 +44,14 @@ screen_w, screen_h = root.winfo_screenwidth(), root.winfo_screenheight()
 running = [True]
 
 random_images = []
-for file in os.listdir("./random"):
-    if file.endswith((".png", ".jpg", ".jpeg")):
-        try:
-            img = Image.open(os.path.join("./random", file))
-            random_images.append(img)
-        except:
-            pass
+if os.path.exists(random_path):
+    for file in os.listdir(random_path):
+        if file.endswith((".png", ".jpg", ".jpeg")):
+            try:
+                img = Image.open(os.path.join(random_path, file))
+                random_images.append(img)
+            except:
+                pass
 
 def flash_bg():
     colors = ["black","red","green","blue","yellow","magenta","cyan","white"]
